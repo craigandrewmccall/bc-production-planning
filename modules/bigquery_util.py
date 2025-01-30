@@ -19,7 +19,7 @@ BS_MORTALITY_STD = 0.05
 MF_MORTALITY_STD = 0.1
 FS_MORTALITY_STD = 0.05
 
-def save_production_plan_to_bigquery(plan_name, unified_result, tenant: str):
+def save_production_plan_to_bigquery(plan_name, unified_result, tenant: str, selected_date: str):
     """
     Save the unified production plan (unified_result) to BigQuery in a unified table.
 
@@ -62,6 +62,7 @@ def save_production_plan_to_bigquery(plan_name, unified_result, tenant: str):
     # Add metadata
     combined_data["PlanName"] = plan_name
     combined_data["SavedAt"] = pd.Timestamp.now()
+    combined_data["StartedAt"] = pd.Timestamp(selected_date)
 
     # Save to BigQuery
     table_id = "brain-coral.prod_planning_mvp.production_plans"
